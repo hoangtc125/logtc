@@ -9,7 +9,7 @@ class SocketIOHandler(logging.Handler):
         self.sio = socketio.Client()
         self.url = url
         self.handshake_path = handshake_path
-        self.channel = "__logtc"
+        self.channel = "__logngo"
         self._connect()
 
     def _connect(self):

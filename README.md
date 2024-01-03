@@ -1,8 +1,8 @@
-# `logtc`: Python Logging Library
+# `logngo`: Python Logging Library
 
 ## Overview
 
-`logtc` is a versatile Python logging library designed for modern web services. It provides advanced logging capabilities including context-aware logging for request and internal tasks, automatic file rotation based on time intervals, and socket-based logging with automatic Socket.IO support.
+`logngo` is a versatile Python logging library designed for modern web services. It provides advanced logging capabilities including context-aware logging for request and internal tasks, automatic file rotation based on time intervals, and socket-based logging with automatic Socket.IO support.
 
 ## Key Features
 
@@ -13,35 +13,31 @@
 
 ## Installation
 
-You can install `logtc` via pip:
+You can install `logngo` via pip:
 
 ```bash
-pip install logtc
+pip install logngo
 ```
 
 ## Setup and Configuration
 
 ### Basic Logger Setup
 
-To set up the logger, import the `Logger` from `logtc` and configure it with your preferences:
+To set up the logger, import the `Logger` from `logngo` and configure it with your preferences:
 
 ```python
-from logtc.logger import Logger
+from logngo import Logger
 
-Logger().setup(
-    name="test_service",
-    log_path="E:\\logging\\log\\.log",
-    when="M",
-    interval=1,
-    url="http://localhost:8000",
-    handshake_path="/logtc/socket.io/",
-)
+Logger().setup(name="test")
+Logger().setup_file_handler(file_path="../log/.log", when="M", interval=1)
+Logger().setup_socket_handler(url="http://localhost:8000", handshake_path="logngo/socket.io")
+Logger().setup_stream_handler()
 ```
 
 Parameters:
 
 - `name`: Name of the logging service.
-- `log_path`: Path to the log file.
+- `file_path`: Path to the log file.
 - `when` and `interval`: Controls the log file rotation. For instance, "M" and 1 means the file rotates every minute.
 - `url`: URL for the socket logging server.
 - `handshake_path`: Handshake path for the Socket.IO server.
@@ -51,36 +47,36 @@ Parameters:
 For logging with request or task-specific contexts:
 
 ```python
-from logtc.logger import request_id_context
+from logngo import context
 
 # Set a unique identifier for the current context
-request_id_context.set(UNIQUE_ID)
+context.set(UNIQUE_ID)
 ```
 
 Each log message will include this unique identifier, making it easier to correlate logs with specific requests or tasks.
 
 ### Socket Logging with FastAPI
 
-To use socket logging with FastAPI, mount the `socket` from `logtc`:
+To use socket logging with FastAPI, mount the `socket` from `logngo`:
 
 ```python
 from fastapi import FastAPI
-from logtc.logger import socket
+from logngo import socket_ngo
 
 app = FastAPI()
 
 # Mount the socket logger
-app.mount("/logtc", socket())
+app.mount("logngo", socket_ngo())
 ```
 
 This sets up an endpoint for the Socket.IO server, enabling real-time log streaming.
 
 ## Usage
 
-After setting up `logtc`, you can use its logger to log messages of different severities:
+After setting up `logngo`, you can use its logger to log messages of different severities:
 
 ```python
-from logtc.logger import Logger
+from logngo import Logger
 
 # Logging an info message
 Logger().logger.info("This is an info message.")
@@ -100,8 +96,8 @@ Logger().logger.critical("This is a critical message.")
 
 ## Contributing
 
-Contributions to `logtc` are welcome! Please refer to the repository's contribution guidelines for more details.
+Contributions to `logngo` are welcome! Please refer to the repository's contribution guidelines for more details.
 
 ## License
 
-`logtc` is released under MIT License.
+`logngo` is released under MIT License.

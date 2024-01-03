@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='logtc',
+    name='logngo',
     version='0.1',
     packages=find_packages(),
     description='Log chains for webserver',
@@ -9,11 +9,12 @@ setup(
     long_description_content_type='text/markdown',
     author='Cong Hoang Tran',
     author_email='trconghoangg@gmail.com',
-    url='facebook.com/hoang2k1111',
+    url='https://github.com/hoangtc125/logtc',
     install_requires=[
         'requests',
         'python-socketio',
-        'websocket-client'
+        'websocket-client',
+        'contextvars'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

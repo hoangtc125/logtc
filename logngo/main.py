@@ -7,17 +7,17 @@ from .singleton import singleton
 from .handler import SocketIOHandler
 from .utils import setup_logging
 
-logtc_context = contextvars.ContextVar('logtc_context', default="logngo")
+context = contextvars.ContextVar('context', default="logngo")
 
 
 class CustomFormatter(logging.Formatter):
     def format(self, record):
-        record.request_id = logtc_context.get()
+        record.request_id = context.get()
         return super().format(record)
 
 
 @singleton
-class Logtc:
+class Logger:
     def __init__(self):
         self.logger = logging.getLogger("logngo")
         self.logger.setLevel(logging.DEBUG)

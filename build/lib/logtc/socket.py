@@ -1,7 +1,7 @@
 import socketio
 
 from .singleton import singleton
-from .logger import Logger
+from .logger import Logtc
 
 
 def get_source(environ):
@@ -23,25 +23,25 @@ class Socket:
             source = get_source(environ)
             if source == "subscriber":
                 self.__socket_logging_client = sid
-                Logger().add_socket_logging()
-                print(f"Subscriber connected {self.__socket_logging_client}")
+                Logtc().add_socket_logging()
+                print(f"logngo: Subscriber connected {self.__socket_logging_client}")
             else:
-                print(f"Publisher connected")
+                print(f"logngo: Publisher connected")
 
         @self.__sio.on("disconnect")
         async def handle_disconnect(sid):
             if sid == self.__socket_logging_client:
-                Logger().remove_socket_logging()
-                print(f"Subscriber disconnected {sid}")
+                Logtc().remove_socket_logging()
+                print(f"logngo: Subscriber disconnected {sid}")
             else:
-                print("Publisher disconnected")
+                print("logngo: Publisher disconnected")
 
         @self.__sio.on("__logtc")
         async def handle_message(sid, data):
-            await self.__sio.emit("logtc", data)
+            await self.__sio.emit("logngo", data)
 
     def __call__(self):
         return self.__asgi
 
 
-socket = Socket()
+sockettc = Socket()
