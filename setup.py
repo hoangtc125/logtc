@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='logngo',
-    version='0.7',
+    version='0.8',
     packages=find_packages(),
     description='Log chains for webserver',
     long_description=open('README.md').read(),

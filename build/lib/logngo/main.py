@@ -79,5 +79,5 @@ class Logger:
     def remove_socket_logging(self):
         if self.__socket_enable and self.socket_handler:
             print("logngo: Remove socket handler")
-            self.logger.removeHandler(self.socket_handler)
-            self.__socket_enable = False
+            # self.logger.removeHandler(self.socket_handler)
+            # self.__socket_enable = False
