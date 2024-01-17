@@ -71,6 +71,7 @@ class Logger:
     def add_socket_logging(self):
         if self.__socket_enable:
             return
+        self.__socket_enable = True
         connect_thread = threading.Thread(target=self.__setup_socket_connection, args=())
         connect_thread.daemon = True
         connect_thread.start()
