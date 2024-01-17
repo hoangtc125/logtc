@@ -1,0 +1,120 @@
+Metadata-Version: 2.1
+Name: logngo
+Version: 0.6
+Summary: Log chains for webserver
+Home-page: https://github.com/hoangtc125/logtc
+Author: Cong Hoang Tran
+Author-email: trconghoangg@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: python-socketio
+Requires-Dist: websocket-client
+Requires-Dist: contextvars
+
+# `logngo`: Python Logging Library
+
+## Overview
+
+`logngo` is a versatile Python logging library designed for modern web services. It provides advanced logging capabilities including context-aware logging for request and internal tasks, automatic file rotation based on time intervals, and socket-based logging with automatic Socket.IO support.
+
+## Key Features
+
+- **Context-Aware Logging**: Log messages are tagged with a unique context, making it easier to trace logs back to specific requests or internal tasks.
+- **Automatic File Rotation**: Log files are automatically rotated based on configurable time intervals, helping manage log file sizes and organization.
+- **Socket Logging**: Real-time logging through web sockets, with built-in support for Socket.IO.
+- **Easy Integration with Web Frameworks**: Designed to be easily integrated with frameworks like FastAPI.
+
+## Installation
+
+You can install `logngo` via pip:
+
+```bash
+pip install logngo
+```
+
+## Setup and Configuration
+
+### Basic Logger Setup
+
+To set up the logger, import the `Logger` from `logngo` and configure it with your preferences:
+
+```python
+from logngo import Logger
+
+Logger().setup(name="test")
+Logger().setup_file_handler(file_path="../log/.log", when="M", interval=1)
+Logger().setup_socket_handler(url="http://localhost:8000", handshake_path="logngo/socket.io")
+Logger().setup_stream_handler()
+```
+
+Parameters:
+
+- `name`: Name of the logging service.
+- `file_path`: Path to the log file.
+- `when` and `interval`: Controls the log file rotation. For instance, "M" and 1 means the file rotates every minute.
+- `url`: URL for the socket logging server.
+- `handshake_path`: Handshake path for the Socket.IO server.
+
+### Context-Aware Logging
+
+For logging with request or task-specific contexts:
+
+```python
+from logngo import context
+
+# Set a unique identifier for the current context
+context.set(UNIQUE_ID)
+```
+
+Each log message will include this unique identifier, making it easier to correlate logs with specific requests or tasks.
+
+### Socket Logging with FastAPI
+
+To use socket logging with FastAPI, mount the `socket` from `logngo`:
+
+```python
+from fastapi import FastAPI
+from logngo import socket_ngo
+
+app = FastAPI()
+
+# Mount the socket logger
+app.mount("logngo", socket_ngo())
+```
+
+This sets up an endpoint for the Socket.IO server, enabling real-time log streaming.
+
+## Usage
+
+After setting up `logngo`, you can use its logger to log messages of different severities:
+
+```python
+from logngo import Logger
+
+# Logging an info message
+Logger().logger.info("This is an info message.")
+
+# Logging a warning message
+Logger().logger.warning("This is a warning message.")
+
+# Logging an error message
+Logger().logger.error("This is an error message.")
+
+# Logging a debug message
+Logger().logger.debug("This is a debug message.")
+
+# Logging a critical message
+Logger().logger.critical("This is a critical message.")
+```
+
+## Contributing
+
+Contributions to `logngo` are welcome! Please refer to the repository's contribution guidelines for more details.
+
+## License
+
+`logngo` is released under MIT License.

@@ -1,0 +1,4 @@
+requests
+python-socketio
+websocket-client
+contextvars
